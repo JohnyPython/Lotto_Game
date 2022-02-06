@@ -1,10 +1,8 @@
 import random
 import sys
 
-
 import random
 import sys
-
 
 all_kegs_in_bag = 90
 num_in_card_player = 15
@@ -33,17 +31,6 @@ def create_card(name, card_n):
     print('{:-^30}'.format('-'))
 
 
-# заменяет цифру на зачеркивание
-def cross_out_number_func(keg_numb, card_lists):
-    for k in card_lists:
-        try:
-            k.insert(k.index(keg_numb), 'x')
-            k.pop(k.index(keg_numb))
-        except ValueError:
-            continue
-    return True
-
-
 card_n1_set = random.sample(list_of_kegs, 15)
 card_n2_set = random.sample(list_of_kegs, 15)
 card_n1 = [card_n1_set[:5], card_n1_set[5:10], card_n1_set[10:]]
@@ -63,7 +50,13 @@ def player_action():
     answer = input('Cross out the number? (y/n): ')
     if answer == 'y':
         if keg in card_n1_set:
-            cross_out_number_func(keg, card_n1)
+            for k in card_n1:
+                try:
+                    k.insert(k.index(keg), 'x')
+                    k.pop(k.index(keg))
+                except ValueError:
+                    continue
+            return True
         else:
             print('This number is in your card!!You Lose!!!')
             sys.exit()
@@ -77,7 +70,13 @@ def player_action():
 
 def computer_action():
     if keg in card_n2_set:
-        cross_out_number_func(keg, card_n2)
+        for k in card_n2:
+            try:
+                k.insert(k.index(keg), 'x')
+                k.pop(k.index(keg))
+            except ValueError:
+                continue
+        return True
 
 
 for keg in list_of_kegs:
@@ -89,9 +88,10 @@ for keg in list_of_kegs:
         num_in_card_player -= 1
     if computer_action():
         num_in_card_comp -= 1
-    if card_n1_set == 0:
+    if num_in_card_player == 0:
         print('You WIN!!!')
-    if card_n2_set == 0:
+        sys.exit()
+    if num_in_card_comp == 0:
         print('Computer WIN!!! You lose!!!')
-    if all_kegs_in_bag == 0:
-        print('Game over')
+        sys.exit()
+
