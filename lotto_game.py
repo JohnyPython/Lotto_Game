@@ -1,8 +1,6 @@
 import random
 import sys
 
-import random
-import sys
 
 all_kegs_in_bag = 90
 num_in_card_player = 15
@@ -58,7 +56,7 @@ def player_action():
                     continue
             return True
         else:
-            print('This number is in your card!!You Lose!!!')
+            print('This number is not in your card!!You Lose!!!')
             sys.exit()
     elif answer == 'n':
         if keg in card_n1_set:
@@ -79,19 +77,22 @@ def computer_action():
         return True
 
 
-for keg in list_of_kegs:
-    all_kegs_in_bag -= 1
-    print(f'New kegs:{keg} (Remains:{all_kegs_in_bag})')
-    card_name('player')
-    card_name('computer')
-    if player_action():
-        num_in_card_player -= 1
-    if computer_action():
-        num_in_card_comp -= 1
-    if num_in_card_player == 0:
-        print('You WIN!!!')
-        sys.exit()
-    if num_in_card_comp == 0:
-        print('Computer WIN!!! You lose!!!')
-        sys.exit()
+if __name__ == "__main__":
+    for keg in list_of_kegs:
+        all_kegs_in_bag -= 1
+        print(f'New kegs:{keg} (Remains:{all_kegs_in_bag})')
+        card_name('player')
+        card_name('computer')
+        if player_action():
+            num_in_card_player -= 1
+        if computer_action():
+            num_in_card_comp -= 1
+        if num_in_card_player == 0:
+            print('You WIN!!!')
+            sys.exit()
+        if num_in_card_comp == 0:
+            print('Computer WIN!!! You lose!!!')
+            sys.exit()
+
+
 
